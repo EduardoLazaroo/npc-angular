@@ -1,0 +1,16 @@
+
+  <h2>Login</h2>
+  <form (submit)="loginWithEmail($event)">
+    <input [(ngModel)]="email" name="email" placeholder="E-mail" />
+    <input
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Senha"
+      type="password"
+    />
+    <button type="submit">Entrar com E-mail</button>
+    <button type="button" (click)="register()">Criar Conta</button>
+  </form>
+
+  <hr />
+  <button (click)="auth.loginWithGoogle()">Login com Google</button>

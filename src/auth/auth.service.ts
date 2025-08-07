@@ -8,11 +8,13 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private auth = inject(Auth);
+  private router = inject(Router);
   public user$ = new BehaviorSubject<User | null>(null);
 
   constructor() {
@@ -26,6 +28,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.auth, provider);
       this.user$.next(result.user);
+      this.router.navigate(['/home']);
     } catch (err) {
       console.error('Erro no login com Google:', err);
     }
@@ -35,6 +38,7 @@ export class AuthService {
     try {
       const result = await signInWithEmailAndPassword(this.auth, email, password);
       this.user$.next(result.user);
+      this.router.navigate(['/home']);
     } catch (err) {
       console.error('Erro no login com e-mail:', err);
     }
@@ -44,14 +48,16 @@ export class AuthService {
     try {
       const result = await createUserWithEmailAndPassword(this.auth, email, password);
       this.user$.next(result.user);
+      this.router.navigate(['/home']);
     } catch (err) {
       console.error('Erro ao criar conta:', err);
     }
   }
 
   // ✅ Logout
-  async logout() {
-    await signOut(this.auth);
-    this.user$.next(null);
-  }
+async logout() {
+  await signOut(this.auth);
+  this.user$.next(null);
+  this.router.navigate(['/login']); // Redireciona para login após logout
+}
 }
