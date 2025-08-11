@@ -1,29 +1,29 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login.html',
-  styleUrl: './login.scss'
+  templateUrl: './register.html',
+  styleUrl: '../login/login.scss'
 })
-export class LoginComponent {
+export class RegisterComponent {
   auth = inject(AuthService);
   router = inject(Router);
 
   email = '';
   password = '';
 
-  onLoginWithEmail(event: Event) {
+  onRegister(event: Event) {
     event.preventDefault();
-    this.auth.loginWithEmail(this.email, this.password);
+    this.auth.registerWithEmail(this.email, this.password);
   }
 
-  navigateToRegister() {
-    this.router.navigate(['/register']);
+  navigateToLogin() {
+    this.router.navigate(['/login']);
   }
 }

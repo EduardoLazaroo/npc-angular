@@ -1,13 +1,13 @@
 <div class="auth-container">
   <div class="auth-card">
-    <h2>Bem-vindo de volta 👋</h2>
-    <form (submit)="onLoginWithEmail($event)" class="auth-form">
+    <h2>Crie sua conta 🚀</h2>
+    <form class="auth-form" (submit)="onRegister($event)">
       <div class="form-group">
         <input
           [(ngModel)]="email"
           name="email"
-          placeholder="Digite seu e-mail"
           type="email"
+          placeholder="Digite seu e-mail"
           required
         />
       </div>
@@ -15,21 +15,21 @@
         <input
           [(ngModel)]="password"
           name="password"
-          placeholder="Digite sua senha"
           type="password"
+          placeholder="Crie uma senha"
           required
         />
       </div>
       <button type="submit" class="btn primary">
-        🔐 Entrar com E-mail
-      </button>
-      <button type="button" class="btn link" (click)="navigateToRegister()">
-        Criar Conta
+        📝 Criar Conta
       </button>
     </form>
     <div class="separator"><span>ou</span></div>
+    <button type="button" class="btn link" (click)="navigateToLogin()">
+      Já tem uma conta? Entrar
+    </button>
     <button class="btn google" (click)="auth.loginWithGoogle()">
-      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="icon" /> Entrar com Google
+      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="icon" /> Registrar com Google
     </button>
   </div>
 </div>
