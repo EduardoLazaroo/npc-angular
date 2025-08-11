@@ -1,0 +1,60 @@
+/* Sugestão: coloque no home.component.css ou styles.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.navbar-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.user-photo-online {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 3px solid #2ecc40; /* Verde */
+  object-fit: cover;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #222;
+}
+
+.logout-btn {
+  margin-left: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  border: none;
+  background: #e74c3c;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+.logout-btn:hover {
+  background: #c0392b;
+}
+
+.not-authenticated {
+  color: #888;
+  font-style: italic;
+}

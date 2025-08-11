@@ -23,6 +23,10 @@ export class AuthService {
     });
   }
 
+  getUser() {
+    return this.user$.value;
+  }
+
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     try {
@@ -36,7 +40,11 @@ export class AuthService {
 
   async loginWithEmail(email: string, password: string) {
     try {
-      const result = await signInWithEmailAndPassword(this.auth, email, password);
+      const result = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       this.user$.next(result.user);
       this.router.navigate(['/home']);
     } catch (err) {
@@ -46,7 +54,11 @@ export class AuthService {
 
   async registerWithEmail(email: string, password: string) {
     try {
-      const result = await createUserWithEmailAndPassword(this.auth, email, password);
+      const result = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       this.user$.next(result.user);
       this.router.navigate(['/home']);
     } catch (err) {
@@ -54,10 +66,9 @@ export class AuthService {
     }
   }
 
-  // ✅ Logout
-async logout() {
-  await signOut(this.auth);
-  this.user$.next(null);
-  this.router.navigate(['/login']); // Redireciona para login após logout
-}
+  async logout() {
+    await signOut(this.auth);
+    this.user$.next(null);
+    this.router.navigate(['/login']);
+  }
 }
