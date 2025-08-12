@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [ CommonModule],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrls: ['./home.scss'],
 })
 export class Home {
   auth = inject(AuthService);
+  menuOpen = false;
 
   get user() {
     return this.auth.getUser?.();
@@ -17,5 +19,9 @@ export class Home {
 
   logout() {
     this.auth.logout();
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }
