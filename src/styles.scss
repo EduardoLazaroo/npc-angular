@@ -4,3 +4,46 @@
 body, input{
   background-color: rgb(7, 11, 17);
 }
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+
+  .chat-row {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 4px;
+
+    .bubble {
+      padding: 8px 12px;
+      border-radius: 16px;
+      max-width: 70%;
+      word-wrap: break-word;
+    }
+
+    .timestamp {
+      font-size: 0.7rem;
+      color: #999;
+      margin: 0 5px;
+      align-self: flex-end;
+    }
+  }
+
+  .npc-message {
+    justify-content: flex-start; // à esquerda
+    .bubble.npc {
+      background-color: #444; // cor do NPC
+      color: #fff;
+      border-top-left-radius: 0;
+    }
+  }
+
+  .user-message {
+    justify-content: flex-end; // à direita
+    .bubble.user {
+      background-color: #6c5ce7; // cor do usuário
+      color: #fff;
+      border-top-right-radius: 0;
+    }
+  }
+}

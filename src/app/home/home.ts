@@ -144,15 +144,35 @@ export class Home {
     });
   }
 
-  searchNPC() {
-    if (!this.searchTerm) return;
+searchNPC() {
+  if (!this.searchTerm) return;
 
-    this.api.searchNPC(this.searchTerm).subscribe({
-      next: (npc) => {
-        console.log('NPC gerado:', npc);
-        this.loadNPCs();
-      },
-      error: (err) => console.error('Erro ao buscar NPC', err),
-    });
-  }
+  this.api.searchNPC(this.searchTerm).subscribe({
+    next: (npc) => {
+      console.log('NPC gerado:', npc);
+
+      this.newNPC = {
+        name: npc.name || '',
+        origin_world: npc.origin_world || '',
+        archetype: npc.archetype || '',
+        alignment: npc.alignment || '',
+        personality_traits: npc.personality_traits || '',
+        voice_style: npc.voice_style || '',
+        mood: npc.mood || '',
+        emotion: npc.emotion || '',
+        skills: npc.skills || '',
+        known_for: npc.known_for || '',
+        catchphrase: npc.catchphrase || '',
+        backstory: npc.backstory || '',
+        // avatar_url e tags
+        avatar_url: npc.avatar_url || '',
+        tags: npc.tags || []
+      };
+
+      this.loadNPCs();
+    },
+    error: (err) => console.error('Erro ao buscar NPC', err),
+  });
+}
+
 }
