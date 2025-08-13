@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { ApiService, NPC } from '../../services/api.service';
 import { FormsModule } from '@angular/forms';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,17 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
+  animations: [
+    trigger('fadeInUp', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)' }),
+        animate(
+          '200ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class Home {
   npcs: NPC[] = [];
@@ -20,9 +32,13 @@ export class Home {
   userMessage = '';
   userName = '';
   menuOpen = false;
+  loadingStory = false;
+  sendingMessage = false;
+  selectedNPCName = '';
 
   api = inject(ApiService);
   auth = inject(AuthService);
+  cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.loadNPCs();
@@ -58,42 +74,74 @@ export class Home {
     });
   }
 
-  selectNPC(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    const npcName = target.value;
+  selectNPC(npcName: string) {
     if (!npcName) return;
-
-    this.api.getNPCByName(npcName).subscribe({
-      next: (npc) => {
-        this.selectedNPC = npc;
-        this.loadStory();
-      },
-      error: (err) => console.error('Erro ao carregar NPC', err),
-    });
+    const npc = this.npcs.find((n) => n.name === npcName);
+    if (npc) {
+      this.selectedNPC = npc;
+      this.storyLog = [];
+      this.loadStory(npc.name);
+    }
   }
 
-  loadStory() {
-    if (!this.selectedNPC) return;
-    this.api.getStoryLog(this.selectedNPC.name).subscribe({
-      next: (data) => (this.storyLog = data),
-      error: (err) => console.error('Erro ao carregar histórico', err),
+  onNPCSelected(npc: NPC | null) {
+    if (!npc) return;
+    this.selectedNPC = npc;
+    this.storyLog = [];
+    this.loadingStory = true;
+    this.loadStory(npc.name);
+  }
+
+  loadStory(npcName?: string) {
+    const nameToLoad = npcName || this.selectedNPC?.name;
+    if (!nameToLoad) return;
+
+    this.loadingStory = true;
+
+    this.api.getStoryLog(nameToLoad).subscribe({
+      next: (data) => {
+        this.storyLog = data;
+        this.loadingStory = false;
+        this.cdr.detectChanges(); // força atualização da UI
+      },
+      error: (err) => {
+        console.error('Erro ao carregar histórico', err);
+        this.loadingStory = false;
+        this.cdr.detectChanges();
+      },
     });
   }
 
   sendMessage() {
-    if (!this.selectedNPC || !this.userMessage) return;
+    if (!this.selectedNPC || !this.userMessage || this.sendingMessage) return;
 
+    this.sendingMessage = true;
     const sender = this.userName || 'Usuário';
+    const tempInteraction = {
+      from: sender,
+      to: this.selectedNPC.name,
+      response: '...',
+      emotion: '',
+      mood: '',
+      html: `<p><strong>${sender}:</strong> ${this.userMessage}</p>`,
+    };
 
-    this.api
-      .interactNPC(sender, this.selectedNPC.name, this.userMessage)
-      .subscribe({
-        next: (interaction) => {
-          this.storyLog.push(interaction);
-          this.userMessage = '';
-        },
-        error: (err) => console.error('Erro ao enviar mensagem', err),
-      });
+    this.storyLog.push(tempInteraction);
+    const message = this.userMessage;
+    this.userMessage = '';
+
+    this.api.interactNPC(sender, this.selectedNPC.name, message).subscribe({
+      next: (interaction) => {
+        Object.assign(tempInteraction, interaction);
+        this.sendingMessage = false;
+      },
+      error: (err) => {
+        console.error('Erro ao enviar mensagem', err);
+        this.storyLog = this.storyLog.filter((i) => i !== tempInteraction);
+        this.userMessage = message;
+        this.sendingMessage = false;
+      },
+    });
   }
 
   searchNPC() {

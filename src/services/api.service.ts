@@ -30,7 +30,7 @@ export interface Interaction {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   private baseUrl = 'http://127.0.0.1:5000';
@@ -49,8 +49,16 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/register_npc`, data);
   }
 
-  interactNPC(from: string, to: string, message: string): Observable<Interaction> {
-    return this.http.post<Interaction>(`${this.baseUrl}/interact_npc`, { from, to, message });
+  interactNPC(
+    from: string,
+    to: string,
+    message: string
+  ): Observable<Interaction> {
+    return this.http.post<Interaction>(`${this.baseUrl}/interact_npc`, {
+      from,
+      to,
+      message,
+    });
   }
 
   getStoryLog(npc_name: string): Observable<any[]> {

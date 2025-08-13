@@ -156,9 +156,13 @@
       <h3>Cadastrar Novo NPC</h3>
       <div class="divider"></div>
       <div class="npc-list">
-        <select (change)="selectNPC($event)">
-          <option value="" disabled selected>Selecione um NPC</option>
-          <option *ngFor="let npc of npcs" [value]="npc.name">
+        <select
+          [(ngModel)]="selectedNPC"
+          (ngModelChange)="selectNPC($event?.name)"
+          [disabled]="npcs.length === 0"
+        >
+          <option [ngValue]="null" disabled>Selecione um NPC</option>
+          <option *ngFor="let npc of npcs" [ngValue]="npc">
             {{ npc.name }}
           </option>
         </select>
@@ -212,7 +216,11 @@
     <div class="step-right">
       <h3>Histórico da Narrativa</h3>
       <div class="history-content">
-        <div *ngFor="let entry of storyLog" [innerHTML]="entry.html"></div>
+        <div
+          *ngFor="let entry of storyLog"
+          [@fadeInUp]
+          [innerHTML]="entry.html"
+        ></div>
       </div>
       <div class="message-box">
         <textarea
@@ -227,7 +235,9 @@
             placeholder="Seu nome (opcional)"
             [(ngModel)]="userName"
           />
-          <button (click)="sendMessage()">Enviar</button>
+          <button (click)="sendMessage()" [disabled]="sendingMessage">
+            Enviar
+          </button>
         </div>
       </div>
     </div>
