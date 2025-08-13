@@ -23,6 +23,10 @@ export class LoginComponent {
     this.auth.loginWithEmail(this.email, this.password);
   }
 
+  notPassword() {
+    this.router.navigate(['/home']);
+  }
+
   navigateToRegister() {
     this.router.navigate(['/register']);
   }
