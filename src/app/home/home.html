@@ -1,4 +1,4 @@
-<nav class="navbar">
+<!-- <nav class="navbar">
   <div class="navbar-left">
     <span class="navbar-title">NPC Angular</span>
   </div>
@@ -35,69 +35,66 @@
     </div>
 
     <div class="bottom">
-      <!-- <h3>Cadastrar Novo NPC</h3>
-      <div class="divider"></div> -->
-<div class="contents">
-  <div class="fields-group">
-    <div class="field">
-      <label>Nome</label>
-      <input type="text" placeholder="Nome do NPC" />
-    </div>
-    <div class="field">
-      <label>Mundo de Origem</label>
-      <input type="text" placeholder="Mundo ou cenário" />
-    </div>
-  </div>
-  <div class="fields-group">
-    <div class="field">
-      <label>Arquétipo</label>
-      <input type="text" placeholder="Ex: guerreiro" />
-    </div>
-    <div class="field">
-      <label>Alinhamento</label>
-      <input type="text" placeholder="Ex: leal e bom" />
-    </div>
-  </div>
-  <div class="fields-group">
-    <div class="field">
-      <label>Traços de Personalidade</label>
-      <input type="text" placeholder="Traços" />
-    </div>
-    <div class="field">
-      <label>Emoção</label>
-      <input type="text" placeholder="Ex: alegria" />
-    </div>
-  </div>
-  <div class="fields-group">
-    <div class="field">
-      <label>Humor</label>
-      <input type="text" placeholder="Ex: calmo" />
-    </div>
-    <div class="field">
-      <label>Estilo de Voz</label>
-      <input type="text" placeholder="Tom de fala" />
-    </div>
-  </div>
-  <div class="fields-group">
-    <div class="field">
-      <label>Habilidades</label>
-      <input type="text" placeholder="Ex: furtividade" />
-    </div>
-    <div class="field">
-      <label>Conhecido por</label>
-      <input type="text" placeholder="Fama ou feitos" />
-    </div>
-  </div>
-  <div class="field">
-    <label>História de Fundo</label>
-    <textarea rows="4" placeholder="História do NPC"></textarea>
-  </div>
-  <div class="field">
-    <label>Frase de Efeito</label>
-    <input type="text" placeholder="Frase marcante" />
-  </div>
-</div>
-
+      <div class="contents">
+        <div class="fields-group">
+          <div class="field">
+            <label>Nome</label>
+            <input type="text" placeholder="Nome do NPC" />
+          </div>
+          <div class="field">
+            <label>Mundo de Origem</label>
+            <input type="text" placeholder="Mundo ou cenário" />
+          </div>
+        </div>
+        <div class="fields-group">
+          <div class="field">
+            <label>Arquétipo</label>
+            <input type="text" placeholder="Ex: guerreiro" />
+          </div>
+          <div class="field">
+            <label>Alinhamento</label>
+            <input type="text" placeholder="Ex: leal e bom" />
+          </div>
+        </div>
+        <div class="fields-group">
+          <div class="field">
+            <label>Traços de Personalidade</label>
+            <input type="text" placeholder="Traços" />
+          </div>
+          <div class="field">
+            <label>Emoção</label>
+            <input type="text" placeholder="Ex: alegria" />
+          </div>
+        </div>
+        <div class="fields-group">
+          <div class="field">
+            <label>Humor</label>
+            <input type="text" placeholder="Ex: calmo" />
+          </div>
+          <div class="field">
+            <label>Estilo de Voz</label>
+            <input type="text" placeholder="Tom de fala" />
+          </div>
+        </div>
+        <div class="fields-group">
+          <div class="field">
+            <label>Habilidades</label>
+            <input type="text" placeholder="Ex: furtividade" />
+          </div>
+          <div class="field">
+            <label>Conhecido por</label>
+            <input type="text" placeholder="Fama ou feitos" />
+          </div>
+        </div>
+        <div class="field">
+          <label>História de Fundo</label>
+          <textarea rows="4" placeholder="História do NPC"></textarea>
+        </div>
+        <div class="field">
+          <label>Frase de Efeito</label>
+          <input type="text" placeholder="Frase marcante" />
+        </div>
+      </div>
 
       <button class="register-btn">Cadastrar NPC</button>
     </div>
@@ -187,4 +184,10 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
+
+<h1>NPCs</h1>
+<button (click)="loadNPCs()">Carregar NPCs</button>
+<ul>
+  <li *ngFor="let npc of npcs">{{ npc.name }}</li>
+</ul>
