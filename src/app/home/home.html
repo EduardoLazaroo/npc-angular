@@ -1,4 +1,4 @@
-<!-- <nav class="navbar">
+<nav class="navbar">
   <div class="navbar-left">
     <span class="navbar-title">NPC Angular</span>
   </div>
@@ -30,8 +30,9 @@
       <input
         type="text"
         placeholder="Digite um termo (ex: guerreiro, ladina...)"
+        [(ngModel)]="searchTerm"
       />
-      <button>Buscar</button>
+      <button (click)="searchNPC()">Buscar</button>
     </div>
 
     <div class="bottom">
@@ -39,64 +40,114 @@
         <div class="fields-group">
           <div class="field">
             <label>Nome</label>
-            <input type="text" placeholder="Nome do NPC" />
+            <input
+              type="text"
+              placeholder="Nome do NPC"
+              [(ngModel)]="newNPC.name"
+            />
           </div>
           <div class="field">
             <label>Mundo de Origem</label>
-            <input type="text" placeholder="Mundo ou cenário" />
+            <input
+              type="text"
+              placeholder="Mundo ou cenário"
+              [(ngModel)]="newNPC.origin_world"
+            />
           </div>
         </div>
         <div class="fields-group">
           <div class="field">
             <label>Arquétipo</label>
-            <input type="text" placeholder="Ex: guerreiro" />
+            <input
+              type="text"
+              placeholder="Ex: guerreiro"
+              [(ngModel)]="newNPC.archetype"
+            />
           </div>
           <div class="field">
             <label>Alinhamento</label>
-            <input type="text" placeholder="Ex: leal e bom" />
+            <input
+              type="text"
+              placeholder="Ex: leal e bom"
+              [(ngModel)]="newNPC.alignment"
+            />
           </div>
         </div>
         <div class="fields-group">
           <div class="field">
             <label>Traços de Personalidade</label>
-            <input type="text" placeholder="Traços" />
+            <input
+              type="text"
+              placeholder="Traços"
+              [(ngModel)]="newNPC.personality_traits"
+            />
           </div>
           <div class="field">
             <label>Emoção</label>
-            <input type="text" placeholder="Ex: alegria" />
+            <input
+              type="text"
+              placeholder="Ex: alegria"
+              [(ngModel)]="newNPC.emotion"
+            />
           </div>
         </div>
         <div class="fields-group">
           <div class="field">
             <label>Humor</label>
-            <input type="text" placeholder="Ex: calmo" />
+            <input
+              type="text"
+              placeholder="Ex: calmo"
+              [(ngModel)]="newNPC.mood"
+            />
           </div>
           <div class="field">
             <label>Estilo de Voz</label>
-            <input type="text" placeholder="Tom de fala" />
+            <input
+              type="text"
+              placeholder="Tom de fala"
+              [(ngModel)]="newNPC.voice_style"
+            />
           </div>
         </div>
         <div class="fields-group">
           <div class="field">
             <label>Habilidades</label>
-            <input type="text" placeholder="Ex: furtividade" />
+            <input
+              type="text"
+              placeholder="Ex: furtividade"
+              [(ngModel)]="newNPC.skills"
+            />
           </div>
           <div class="field">
             <label>Conhecido por</label>
-            <input type="text" placeholder="Fama ou feitos" />
+            <input
+              type="text"
+              placeholder="Fama ou feitos"
+              [(ngModel)]="newNPC.known_for"
+            />
           </div>
         </div>
         <div class="field">
           <label>História de Fundo</label>
-          <textarea rows="4" placeholder="História do NPC"></textarea>
+          <textarea
+            rows="4"
+            placeholder="História do NPC"
+            [(ngModel)]="newNPC.backstory"
+          ></textarea>
         </div>
         <div class="field">
           <label>Frase de Efeito</label>
-          <input type="text" placeholder="Frase marcante" />
+          <input
+            type="text"
+            placeholder="Frase marcante"
+            [(ngModel)]="newNPC.catchphrase"
+          />
         </div>
       </div>
 
-      <button class="register-btn">Cadastrar NPC</button>
+      <button class="register-btn" (click)="registerNPC()">
+        Cadastrar NPC
+      </button>
     </div>
   </div>
 
@@ -105,63 +156,53 @@
       <h3>Cadastrar Novo NPC</h3>
       <div class="divider"></div>
       <div class="npc-list">
-        <select>
-          <option>Selecione um NPC</option>
+        <select (change)="selectNPC($event)">
+          <option value="" disabled selected>Selecione um NPC</option>
+          <option *ngFor="let npc of npcs" [value]="npc.name">
+            {{ npc.name }}
+          </option>
         </select>
-        <div class="npc-avatar">
-          <img
-            src="https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-color-icon.png"
-            alt="user"
-          />
+
+        <div *ngIf="selectedNPC" class="npc-avatar">
+          <img [src]="selectedNPC.avatar_url" alt="{{selectedNPC.name}}" />
         </div>
-        <div class="npc-info">
+        <div *ngIf="selectedNPC" class="npc-info">
           <div class="npc-details">
             <div class="couple">
-              <strong>Mundo:</strong>
-              <span>Konoha</span>
+              <strong>Mundo:</strong> <span>{{selectedNPC.origin_world}}</span>
             </div>
             <div class="couple">
-              <strong>Arquétipo:</strong>
-              <span>Ninja</span>
+              <strong>Arquétipo:</strong> <span>{{selectedNPC.archetype}}</span>
             </div>
             <div class="couple">
               <strong>Alinhamento:</strong>
-              <span>Neutro</span>
+              <span>{{selectedNPC.alignment}}</span>
             </div>
             <div class="couple">
               <strong>Traços:</strong>
-              <span>Cores marcantes</span>
+              <span>{{selectedNPC.personality_traits}}</span>
             </div>
             <div class="couple">
-              <strong>Voz:</strong>
-              <span>Profunda e calma</span>
+              <strong>Voz:</strong> <span>{{selectedNPC.voice_style}}</span>
             </div>
             <div class="couple">
-              <strong>Humor:</strong>
-              <span>Calmo e sereno</span>
+              <strong>Humor:</strong> <span>{{selectedNPC.mood}}</span>
             </div>
             <div class="couple">
-              <strong>Emoção:</strong>
-              <span>Tristeza</span>
+              <strong>Emoção:</strong> <span>{{selectedNPC.emotion}}</span>
             </div>
             <div class="couple">
-              <strong>Habilidades:</strong>
-              <span>Manipulação de sombras</span>
+              <strong>Habilidades:</strong> <span>{{selectedNPC.skills}}</span>
             </div>
             <div class="couple">
               <strong>Conhecido por:</strong>
-              <span>Ser um estrategista astuto</span>
+              <span>{{selectedNPC.known_for}}</span>
             </div>
             <div class="couple">
-              <strong>Bordão:</strong>
-              <span>O que está nas sombras, controla as sombras.</span>
+              <strong>Bordão:</strong> <span>{{selectedNPC.catchphrase}}</span>
             </div>
             <div class="couple">
-              <strong>História:</strong>
-              <span>
-                Um ninja que cresceu nas sombras, aprendendo a manipular a
-                escuridão ao seu redor.
-              </span>
+              <strong>História:</strong> <span>{{selectedNPC.backstory}}</span>
             </div>
           </div>
         </div>
@@ -170,24 +211,25 @@
 
     <div class="step-right">
       <h3>Histórico da Narrativa</h3>
-      <div class="history-content"></div>
+      <div class="history-content">
+        <div *ngFor="let entry of storyLog" [innerHTML]="entry.html"></div>
+      </div>
       <div class="message-box">
         <textarea
+          [(ngModel)]="userMessage"
           name="message"
           placeholder="Escreva sua mensagem..."
           rows="4"
         ></textarea>
         <div class="div-btns">
-          <input type="text" placeholder="Seu nome (opcional)" />
-          <button>Enviar</button>
+          <input
+            type="text"
+            placeholder="Seu nome (opcional)"
+            [(ngModel)]="userName"
+          />
+          <button (click)="sendMessage()">Enviar</button>
         </div>
       </div>
     </div>
   </div>
-</section> -->
-
-<h1>NPCs</h1>
-<button (click)="loadNPCs()">Carregar NPCs</button>
-<ul>
-  <li *ngFor="let npc of npcs">{{ npc.name }}</li>
-</ul>
+</section>

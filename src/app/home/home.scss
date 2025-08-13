@@ -122,7 +122,7 @@ button {
 
 button:hover,
 button:focus {
-  background-color: darken($primary-purple, 10%);
+  background-color: $primary-purple;
 }
 
 h3 {
@@ -233,6 +233,8 @@ h3 {
           background-color: $bg-darker;
           padding: $padding;
           border-radius: $border-radius;
+          height: 530px;
+          overflow-y: auto;
 
           .npc-details {
             display: flex;
@@ -274,7 +276,9 @@ h3 {
       }
 
       .history-content {
-        flex: 1;
+        // flex: 1;
+        height: 540px;
+        overflow-y: auto;
         background-color: $bg-darker;
         padding: $padding;
         border-radius: $border-radius;
